@@ -1,0 +1,39 @@
+<table class="table table-striped" *ngIf="users">
+    <thead>
+        <tr>
+            <th scope="col">
+                Nombre completo
+            </th>
+            <th scope="col">
+                Correo electronico
+            </th>
+            <th scope="col">
+                Telefóno
+            </th>
+            <th scope="col">
+                Imagen de perfil
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="
+          let user of users.results
+            | slice: (page - 1) * pageSize:(page - 1) * pageSize + pageSize;
+          index as i
+        ">
+            <td>
+                {{user?.name?.title}} {{user?.name?.first}} {{user?.name?.last}}
+            </td>
+            <td>
+                {{user?.email}}
+            </td>
+            <td>
+                {{user?.phone}}
+            </td>
+            <td>
+                <img src="{{user?.picture?.thumbnail}}" alt="">
+            </td>
+
+        </tr>
+    </tbody>
+</table>
