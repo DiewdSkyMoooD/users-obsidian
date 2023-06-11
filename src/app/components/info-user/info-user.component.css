@@ -1,0 +1,23 @@
+.user-img {
+  border-radius: 50%;
+  border: 5px solid #232323;
+  width: 145px;
+  height: 145px;
+}
+
+.user {
+  background: #232323;
+  color: white;
+  border-radius: 5%;
+  margin-top: 75px;
+}
+
+.info {
+  margin-top: 60px;
+}
+
+.back {
+  text-decoration: none;
+  color: black;
+  font-size: 30px;
+}

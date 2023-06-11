@@ -1,29 +1,36 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TableUsersComponent } from './components/table-users/table-users.component';
-import { FormUserComponent } from './components/form-user/form-user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ListUsersComponent } from './components/list-users/list-users.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import{ReactiveFormsModule,FormsModule} from '@angular/forms';
+import { InfoUserComponent } from './components/info-user/info-user.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SpinnerHttpPetitionInterceptor } from './interceptors/spinner-http-petition.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
     TableUsersComponent,
-    FormUserComponent,
     NavbarComponent,
-    ListUsersComponent
+    InfoUserComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpPetitionInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

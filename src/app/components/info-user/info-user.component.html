@@ -1,0 +1,33 @@
+<!--back to list-->
+<a [routerLink]="['/', 'users']" class="back">
+    ← </a>
+
+<!--User using pipe async-->
+<ng-container *ngIf="user$ |async as user; else withoutUser">
+
+    <!--card of user-->
+    <div class="d-flex justify-content-center">
+        <img src="{{user?.picture?.large}}" class="user-img position-absolute">
+        <div class="d-flex flex-column align-items-center p-3 col-lg-6 col-sm-8 col-md-8 user">
+            <div class="info">
+                <h4 class="text-center mb-5">{{user?.name?.title}} {{user?.name?.first}} {{user?.name?.last}}
+                </h4>
+                <div class="d-flex justify-content-around">
+                    <p>⌛ {{user?.dob?.age}}</p>
+                    <p>🌎 {{user?.nat}}</p>
+                    <p>🧬 {{gender(user.gender)}}</p>
+                </div>
+                <p>✉ {{user?.email}}</p>
+                <p>🍰 {{user?.dob?.date|date: 'd/M/yyyy'}}</p>
+                <p>📍 {{user?.location?.street?.number}} {{user?.location?.street?.name}}
+                    {{user?.location?.city}}
+                    {{user?.location?.state}} {{user?.location?.country}}</p>
+                <p>📞 {{user?.phone}}</p>
+
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #withoutUser>
+    <h4 class="text-center">Usuario no encontrado</h4>
+</ng-template>

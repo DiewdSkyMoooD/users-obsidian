@@ -1,39 +1,61 @@
-<table class="table table-striped" *ngIf="users">
-    <thead>
-        <tr>
-            <th scope="col">
-                Nombre completo
-            </th>
-            <th scope="col">
-                Correo electronico
-            </th>
-            <th scope="col">
-                Telefóno
-            </th>
-            <th scope="col">
-                Imagen de perfil
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="
+<!--Title-->
+<h1>Listado de personas</h1>
+
+<!--using async pipe-->
+<ng-container *ngIf="users$ |async as users">
+
+    <!--Section search-->
+    <label>Buscar por nombre</label>
+    <input type="text" class="form-control" [formControl]="name" (keyup)="typingTimer.next(name.value)">
+
+    <!--Separator of sections-->
+    <div class="separation mt-1 mb-1"></div>
+
+    <!--table of users-->
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">
+                        Nombre completo
+                    </th>
+                    <th scope="col">
+                        Correo electronico
+                    </th>
+                    <th scope="col">
+                        Telefóno
+                    </th>
+                    <th scope="col" class="text-center">
+                        Imagen de perfil
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!--pagination on front using slice and all to show a singular user-->
+                <tr *ngFor="
           let user of users.results
             | slice: (page - 1) * pageSize:(page - 1) * pageSize + pageSize;
           index as i
-        ">
-            <td>
-                {{user?.name?.title}} {{user?.name?.first}} {{user?.name?.last}}
-            </td>
-            <td>
-                {{user?.email}}
-            </td>
-            <td>
-                {{user?.phone}}
-            </td>
-            <td>
-                <img src="{{user?.picture?.thumbnail}}" alt="">
-            </td>
+        " [routerLink]="['/', 'users',users?.info?.seed,users.results.indexOf(user)]" class="pointer">
+                    <td>
+                        {{user?.name?.title}} {{user?.name?.first}} {{user?.name?.last}}
+                    </td>
+                    <td>
+                        {{user?.email}}
+                    </td>
+                    <td>
+                        {{user?.phone}}
+                    </td>
+                    <td class="text-center">
+                        <img src="{{user?.picture?.thumbnail}}" height="48" width="48" alt="">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        </tr>
-    </tbody>
-</table>
+    <!--component pagination-->
+    <ngb-pagination class="d-flex justify-content-center" [maxSize]="5" [pageSize]="pageSize"
+        [collectionSize]="users.results.length" [(page)]="page" [ellipses]="false"></ngb-pagination>
+</ng-container>
